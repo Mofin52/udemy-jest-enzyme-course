@@ -2,6 +2,7 @@
 
 # dependencies
 node_modules
+build
 /.pnp
 **/.idea/**
 .pnp.js
