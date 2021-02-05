@@ -7,6 +7,5 @@ const successReducer = (state = false, action) => {
     default:
       return state;
   }
-  return null;
 };
 export default successReducer;
