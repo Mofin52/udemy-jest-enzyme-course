@@ -54,4 +54,8 @@ describe("if there are words guessed", () => {
     const guessedWordNodes = findByTestAttr(wrapper, "guessed-word");
     expect(guessedWordNodes.length).toBe(guessedWords.length);
   });
+  test("renders correct number of guesses in table", () => {
+    const guessedWordNumber = findByTestAttr(wrapper, "guess-number").last();
+    expect(guessedWordNumber.text()).toBe("3");
+  });
 });
