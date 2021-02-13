@@ -1,6 +1,5 @@
 import { storeFactory } from "../test/testUtils";
-import { guessWord } from "./actions";
-import guessedWords from "./reducers/guessedWordsReducer";
+import { guessWord, resetGame } from "./actions";
 
 describe("guessWord action dispatcher", () => {
   const secretWord = "party";

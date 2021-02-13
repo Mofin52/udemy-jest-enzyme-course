@@ -1,8 +1,9 @@
 import React from "react";
 import { shallow } from "enzyme";
 
-import { storeFactory } from "../test/testUtils";
+import { findByTestAttr, storeFactory } from "../test/testUtils";
 import App, { UnconnectedApp } from "./App";
+import { resetGame } from "./actions";
 
 const setup = (state = {}) => {
   const store = storeFactory(state);
@@ -55,4 +56,19 @@ test("getSecretWord runs on App mount", () => {
   // check to see if mock ran
   const getSecretWordCallCount = getSecretWordMock.mock.calls.length;
   expect(getSecretWordCallCount).toBe(1);
+});
+
+test("resetGame is passed to a reset game action as an onClick prop", () => {
+  const store = storeFactory({ success: true });
+  const wrapper = shallow(<App store={store} />)
+    .dive()
+    .dive();
+  const resetBtnElement = findByTestAttr(
+    wrapper,
+    "reset-btn-component"
+  ).getElement();
+
+  expect(resetBtnElement.props.onClick).toEqual(
+    wrapper.instance().props.resetGame
+  );
 });

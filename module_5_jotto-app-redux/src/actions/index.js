@@ -5,6 +5,7 @@ export const actionTypes = {
   CORRECT_GUESS: "CORRECT_GUESS",
   GUESS_WORD: "GUESS_WORD",
   SET_SECRET_WORD: "SET_SECRET_WORD",
+  RESET_GAME: "RESET_GAME",
 };
 
 export function guessWord(guessedWord) {
@@ -23,13 +24,26 @@ export function guessWord(guessedWord) {
   };
 }
 
+function getWordPromise(dispatch) {
+  return axios.get("http://secretwordserver.ru").then((response) => {
+    dispatch({
+      type: actionTypes.SET_SECRET_WORD,
+      payload: response.data,
+    });
+  });
+}
+
 export function getSecretWord() {
   return function (dispatch, getState) {
-    return axios.get("http://secretwordserver.ru").then((response) => {
-      dispatch({
-        type: actionTypes.SET_SECRET_WORD,
-        payload: response.data,
-      });
+    return getWordPromise(dispatch);
+  };
+}
+
+export function resetGame() {
+  return function (dispatch, getState) {
+    dispatch({
+      type: actionTypes.RESET_GAME,
     });
+    return getWordPromise(dispatch);
   };
 }
