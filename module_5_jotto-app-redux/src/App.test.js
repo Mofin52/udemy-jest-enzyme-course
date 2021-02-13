@@ -32,6 +32,12 @@ describe("redux properties", () => {
     const guessedWordsProp = wrapper.instance().props.guessedWords;
     expect(guessedWordsProp).toEqual(guessedWords);
   });
+  test("has access to givenUp state", () => {
+    const givenUp = false;
+    const wrapper = setup({ givenUp });
+    const givenUpProp = wrapper.instance().props.givenUp;
+    expect(givenUpProp).toEqual(givenUp);
+  });
   test("getSecretWord action creator is a function on the props", () => {
     const wrapper = setup();
     const getSecretWordAction = wrapper.instance().props.getSecretWord;

@@ -51,6 +51,36 @@ describe("render", () => {
       expect(submitButton.length).toBe(0);
     });
   });
+
+  describe("given up", () => {
+    let wrapper;
+    beforeEach(() => {
+      wrapper = setup({ givenUp: true });
+    });
+    test("does not render input if user given up", () => {
+      const inputBox = findByTestAttr(wrapper, "input-box");
+      expect(inputBox.length).toBe(0);
+    });
+    test("does not render submit if user is given up", () => {
+      const submit = findByTestAttr(wrapper, "submit-button");
+      expect(submit.length).toBe(0);
+    });
+  });
+
+  describe("not given up", () => {
+    let wrapper;
+    beforeEach(() => {
+      wrapper = setup({ givenUp: false });
+    });
+    test("does render input if user is not given up", () => {
+      const inputBox = findByTestAttr(wrapper, "input-box");
+      expect(inputBox.length).toBe(1);
+    });
+    test("does render submit if user is not given up", () => {
+      const submit = findByTestAttr(wrapper, "submit-button");
+      expect(submit.length).toBe(1);
+    });
+  });
 });
 
 describe("redux props", () => {
@@ -59,6 +89,12 @@ describe("redux props", () => {
     const wrapper = setup({ success });
     const successProp = wrapper.instance().props.success;
     expect(successProp).toBe(success);
+  });
+  test("has givenUp piece of state as prop", () => {
+    const givenUp = true;
+    const wrapper = setup({ givenUp });
+    const successProp = wrapper.instance().props.givenUp;
+    expect(successProp).toBe(givenUp);
   });
   test("has guessWord action creator as a function prop", () => {
     const wrapper = setup();

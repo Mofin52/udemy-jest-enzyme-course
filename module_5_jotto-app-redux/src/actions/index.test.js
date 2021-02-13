@@ -1,6 +1,6 @@
 import moxios from "moxios";
 import { storeFactory } from "../../test/testUtils";
-import { getSecretWord, resetGame } from "./index";
+import { getSecretWord, resetGame, giveUp } from "./index";
 
 describe("getSecretWord action creator", () => {
   beforeEach(() => {
@@ -49,6 +49,9 @@ describe("game reset", () => {
   test("sets success to false when dispatch resetGame", () => {
     expect(newState.success).toBe(false);
   });
+  test("sets givenUp state to false when dispatch resetGame", () => {
+    expect(newState.givenUp).toBe(false);
+  });
   test("sets new secret word when dispatch resetGame", () => {
     const newSecretWord = "perci";
     moxios.wait(() => {
@@ -62,5 +65,16 @@ describe("game reset", () => {
       const newState = store.getState();
       expect(newState.secretWord).toBe(newSecretWord);
     });
+  });
+});
+
+describe("giveUp tests", () => {
+  test("sets given up state to true", () => {
+    const store = storeFactory({
+      givenUp: false,
+    });
+    store.dispatch(giveUp());
+    const newState = store.getState();
+    expect(newState.givenUp).toBe(true);
   });
 });

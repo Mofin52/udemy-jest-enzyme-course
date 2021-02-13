@@ -7,6 +7,7 @@ import { getSecretWord, resetGame } from "./actions";
 import Input from "./Input";
 import { TotalGuesses } from "./TotalGuesses";
 import { ResetGameButton } from "./ResetGameButton";
+import GiveUpButton from "./GiveUpButton";
 
 export class UnconnectedApp extends Component {
   componentDidMount() {
@@ -17,11 +18,13 @@ export class UnconnectedApp extends Component {
     return (
       <div className="container">
         <h1>Jotto</h1>
+        <GiveUpButton />
         <Congrats success={this.props.success} />
         <Input />
         <GuessedWords guessedWords={this.props.guessedWords} />
         <TotalGuesses guessed={this.props.guessedWords.length} />
         <ResetGameButton
+          givenUp={this.props.givenUp}
           success={this.props.success}
           onClick={this.props.resetGame}
           data-test="reset-btn-component"
@@ -32,8 +35,8 @@ export class UnconnectedApp extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { success, guessedWords, secretWord } = state;
-  return { success, guessedWords, secretWord };
+  const { success, guessedWords, secretWord, givenUp } = state;
+  return { success, guessedWords, secretWord, givenUp };
 };
 
 export default connect(mapStateToProps, { getSecretWord, resetGame })(
