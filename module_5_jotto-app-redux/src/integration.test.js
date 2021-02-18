@@ -17,6 +17,7 @@ describe("guessWord action dispatcher", () => {
         ...initialState,
         success: false,
         givenUp: false,
+        error: false,
         formIsSubmitted: false,
         customWordMode: false,
         guessedWords: [
@@ -34,6 +35,7 @@ describe("guessWord action dispatcher", () => {
       const expectedState = {
         ...initialState,
         success: true,
+        error: false,
         formIsSubmitted: false,
         givenUp: false,
         customWordMode: false,
@@ -55,6 +57,7 @@ describe("guessWord action dispatcher", () => {
       const expectedState = {
         ...initialState,
         success: false,
+        error: false,
         formIsSubmitted: false,
         givenUp: false,
         customWordMode: false,
@@ -72,6 +75,7 @@ describe("guessWord action dispatcher", () => {
         ...initialState,
         success: true,
         givenUp: false,
+        error: false,
         formIsSubmitted: false,
         customWordMode: false,
         guessedWords: [

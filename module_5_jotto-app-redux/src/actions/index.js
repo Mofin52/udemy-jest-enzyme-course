@@ -9,6 +9,7 @@ export const actionTypes = {
   GIVE_UP: "GIVE_UP",
   SET_CUSTOM_GAME_MODE: "SET_CUSTOM_GAME_MODE",
   FORM_IS_SUBMITTED: "FORM_IS_SUBMITTED",
+  SET_ERROR: "SET_ERROR",
 };
 
 export function guessWord(guessedWord) {
@@ -39,10 +40,20 @@ export function setSecretWord(payload) {
   return { type: actionTypes.SET_SECRET_WORD, payload: payload };
 }
 
+export function setError(payload) {
+  return { type: actionTypes.SET_ERROR, payload };
+}
+
 function getWordPromise(dispatch) {
-  return axios.get("http://secretwordserver.ru").then((response) => {
-    dispatch(setSecretWord(response.data));
-  });
+  return axios
+    .get("http://secretwordserver.ru")
+    .then((response) => {
+      if (response.status === 200) {
+        dispatch(setError(false));
+        dispatch(setSecretWord(response.data));
+      }
+    })
+    .catch((err) => setError(true));
 }
 
 export function getSecretWord() {

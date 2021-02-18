@@ -32,6 +32,31 @@ describe("getSecretWord action creator", () => {
       expect(newState.secretWord).toBe(secretWord);
     });
   });
+
+  test("sets error if server returns 4** status code", () => {
+    const store = storeFactory();
+    moxios.wait(() => {
+      const request = moxios.requests.mostRecent();
+      request.reject({ status: 404 });
+    });
+
+    return store.dispatch(getSecretWord()).catch((err) => {
+      const newState = store.getState();
+      expect(newState.error).toBe(true);
+    });
+  });
+  test("sets error if server returns 5** status code", () => {
+    const store = storeFactory();
+    moxios.wait(() => {
+      const request = moxios.requests.mostRecent();
+      request.reject({ status: 504 });
+    });
+
+    return store.dispatch(getSecretWord()).catch((err) => {
+      const newState = store.getState();
+      expect(newState.error).toBe(true);
+    });
+  });
 });
 
 describe("game reset", () => {

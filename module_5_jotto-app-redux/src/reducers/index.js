@@ -5,6 +5,7 @@ import secretWord from "./secretWordReducer";
 import givenUp from "./givenUpReducer";
 import customWordMode from "./customWordModeReducer";
 import formIsSubmitted from "./formIsSubmittedReducer";
+import error from "./errorReducer";
 
 export default combineReducers({
   success,
@@ -13,4 +14,5 @@ export default combineReducers({
   givenUp,
   customWordMode,
   formIsSubmitted,
+  error,
 });
