@@ -1,6 +1,12 @@
 import moxios from "moxios";
 import { storeFactory } from "../../test/testUtils";
-import { getSecretWord, resetGame, giveUp } from "./index";
+import {
+  getSecretWord,
+  resetGame,
+  giveUp,
+  setCustomWordMode,
+  setFormIsSubmitted,
+} from "./index";
 
 describe("getSecretWord action creator", () => {
   beforeEach(() => {
@@ -52,6 +58,9 @@ describe("game reset", () => {
   test("sets givenUp state to false when dispatch resetGame", () => {
     expect(newState.givenUp).toBe(false);
   });
+  test("sets customGameMode state to false when dispatch resetGame", () => {
+    expect(newState.customWordMode).toBe(false);
+  });
   test("sets new secret word when dispatch resetGame", () => {
     const newSecretWord = "perci";
     moxios.wait(() => {
@@ -76,5 +85,25 @@ describe("giveUp tests", () => {
     store.dispatch(giveUp());
     const newState = store.getState();
     expect(newState.givenUp).toBe(true);
+  });
+});
+
+describe("setCustomWordMode", () => {
+  test("sets customWordMode to action's payload", () => {
+    const store = storeFactory({
+      customWordMode: false,
+    });
+    store.dispatch(setCustomWordMode(true));
+    const newState = store.getState();
+    expect(newState.customWordMode).toBe(true);
+  });
+});
+
+describe("setFormIsSubmitted", () => {
+  test("sets formIsSubmitted to action's payload", () => {
+    const store = storeFactory({ formIsSubmitted: false });
+    store.dispatch(setFormIsSubmitted(true));
+    const newState = store.getState();
+    expect(newState.formIsSubmitted).toBe(true);
   });
 });

@@ -7,6 +7,8 @@ export const actionTypes = {
   SET_SECRET_WORD: "SET_SECRET_WORD",
   RESET_GAME: "RESET_GAME",
   GIVE_UP: "GIVE_UP",
+  SET_CUSTOM_GAME_MODE: "SET_CUSTOM_GAME_MODE",
+  FORM_IS_SUBMITTED: "FORM_IS_SUBMITTED",
 };
 
 export function guessWord(guessedWord) {
@@ -26,15 +28,20 @@ export function guessWord(guessedWord) {
 }
 
 export function giveUp() {
-  return { type: "GIVE_UP" };
+  return { type: actionTypes.GIVE_UP };
+}
+
+export function setCustomWordMode(payload) {
+  return { type: actionTypes.SET_CUSTOM_GAME_MODE, payload };
+}
+
+export function setSecretWord(payload) {
+  return { type: actionTypes.SET_SECRET_WORD, payload: payload };
 }
 
 function getWordPromise(dispatch) {
   return axios.get("http://secretwordserver.ru").then((response) => {
-    dispatch({
-      type: actionTypes.SET_SECRET_WORD,
-      payload: response.data,
-    });
+    dispatch(setSecretWord(response.data));
   });
 }
 
@@ -42,6 +49,10 @@ export function getSecretWord() {
   return function (dispatch, getState) {
     return getWordPromise(dispatch);
   };
+}
+
+export function setFormIsSubmitted(payload) {
+  return { type: actionTypes.FORM_IS_SUBMITTED, payload };
 }
 
 export function resetGame() {
