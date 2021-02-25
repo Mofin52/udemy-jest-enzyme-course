@@ -1,10 +1,16 @@
 import React from "react";
-import { shallow } from "enzyme";
+import { mount } from "enzyme";
 import { checkProps, findByTestAttr } from "../test/testUtils";
 import { Input } from "./Input";
+import LanguageContext from "./contexts/languageContext";
 
-const setup = (secretWord = "party") => {
-  return shallow(<Input {...{ secretWord }} />);
+const setup = (secretWord = "party", language) => {
+  language = language || "en";
+  return mount(
+    <LanguageContext.Provider value={language}>
+      <Input {...{ secretWord }} />
+    </LanguageContext.Provider>
+  );
 };
 
 test("Input renders without error", () => {
@@ -15,6 +21,29 @@ test("Input renders without error", () => {
 
 test("does not throws warnings with expected props", () => {
   checkProps(Input, { secretWord: "party" });
+});
+
+describe("language support", () => {
+  test("correctly renders submit text in english", () => {
+    const wrapper = setup();
+    const btn = findByTestAttr(wrapper, "submit-button");
+    expect(btn.text()).toBe("Submit");
+  });
+  test("correctly renders guess placeholder in english", () => {
+    const wrapper = setup();
+    const btn = findByTestAttr(wrapper, "submit-button");
+    expect(btn.text()).toBe("Submit");
+  });
+  test("correctly renders submit text in russian", () => {
+    const wrapper = setup("party");
+    const input = findByTestAttr(wrapper, "input-box").at(0);
+    expect(input.props().placeholder).toBe("enter guess");
+  });
+  test("correctly renders guess placeholder in english", () => {
+    const wrapper = setup("party", "ru");
+    const input = findByTestAttr(wrapper, "input-box").at(0);
+    expect(input.props().placeholder).toBe("введите предположение");
+  });
 });
 
 describe("state controlled input field", () => {

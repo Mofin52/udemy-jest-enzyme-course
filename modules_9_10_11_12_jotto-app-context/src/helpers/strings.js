@@ -12,7 +12,7 @@ const languageStrings = {
     congrats: "Поздравляем! Вы угадали слово!",
     submit: "Отправить",
     guessPrompt: "Побробуйте угадать секретное слово",
-    guessInputPlaceholder: "Введите догадку",
+    guessInputPlaceholder: "введите предположение",
     guessColumnHeader: "Отправленные слова",
     guessedWords: "Догадки",
     matchingLettersColumnHeader: "Совпадаюшие буквы",
